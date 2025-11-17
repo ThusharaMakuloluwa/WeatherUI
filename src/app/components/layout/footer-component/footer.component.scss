@@ -1,0 +1,23 @@
+.app-footer {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-footer {
+    padding: 1rem;
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}
