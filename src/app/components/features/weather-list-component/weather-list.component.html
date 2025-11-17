@@ -1,0 +1,30 @@
+<div class="weather-dashboard">
+  <app-header></app-header>
+
+  <div class="dashboard-content">
+    <div class="search-section">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Enter a city"
+        [(ngModel)]="searchCity"
+        (keyup.enter)="onAddCity()"
+      />
+      <button class="add-btn" (click)="onAddCity()">Add City</button>
+    </div>
+
+    @if (loading && weatherList.length === 0) {
+    <div class="loading">Loading weather data...</div>
+    } @if (error) {
+    <div class="error">{{ error }}</div>
+    }
+
+    <div class="weather-grid">
+      @for (weather of weatherList; track weather.cityId) {
+      <app-weather-card [weather]="weather" (cardClick)="onCardClick($event)"> </app-weather-card>
+      }
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

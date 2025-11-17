@@ -1,0 +1,4 @@
+{
+  "getCities": "/Weather/cities",
+  "getWeatherByCity": "/Weather/{cityId}"
+}

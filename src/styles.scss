@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #1e2430;
+  color: #fff;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(#143a7b, #14171f 40%, #14171f);
+  z-index: -1;
+}
+
+.page__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.cards-grid {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.weather-card {
+  background: #2b3f89;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-card--blue {
+  background: linear-gradient(135deg, #2f7afc, #2560d1);
+}
+.weather-card--purple {
+  background: linear-gradient(135deg, #8f48ff, #6b2cd4);
+}
+.weather-card--green {
+  background: linear-gradient(135deg, #21b573, #1b945e);
+}
