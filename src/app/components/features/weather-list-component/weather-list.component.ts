@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { WeatherService } from '../../../services/weather.service';
@@ -15,13 +15,14 @@ import { FooterComponent } from '../../layout/footer-component/footer.component'
   styleUrl: './weather-list.component.scss',
 })
 export class WeatherListComponent implements OnInit {
+  private weatherService = inject(WeatherService);
+  private router = inject(Router);
+
   cities: City[] = [];
   weatherList: WeatherResult[] = [];
   loading = false;
   error?: string;
   searchCity = '';
-
-  constructor(private weatherService: WeatherService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadCities();

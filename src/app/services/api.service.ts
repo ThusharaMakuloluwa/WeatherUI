@@ -1,15 +1,15 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '../config/api-config';
-import { AppConfig } from '../config/app-config';
+import { AppService } from './app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private http = inject(HttpClient);
+  private appService = inject(AppService);
 
-  private appConfig = signal<AppConfig | null>(null);
   private apiConfig = signal<ApiConfig | null>(null);
 
   private configLoaded = signal(false);
@@ -20,26 +20,16 @@ export class ApiService {
     }
 
     try {
-      const [appConfig, apiConfig] = await Promise.all([
-        this.http.get<AppConfig>('/configuration/app-configuration.json').toPromise(),
-        this.http.get<ApiConfig>('/configuration/api-configuration.json').toPromise(),
-      ]);
+      const apiConfig = await this.http
+        .get<ApiConfig>('/configuration/api-configuration.json')
+        .toPromise();
 
-      this.appConfig.set(appConfig ?? null);
       this.apiConfig.set(apiConfig ?? null);
       this.configLoaded.set(true);
     } catch (error) {
-      console.error('Failed to load configuration', error);
+      console.error('Failed to load API configuration', error);
       throw error;
     }
-  }
-
-  getBaseUrl(): string {
-    const config = this.appConfig();
-    if (!config) {
-      throw new Error('App configuration not loaded');
-    }
-    return config.apiBaseUrl;
   }
 
   getEndpoint(endpointKey: keyof ApiConfig, params?: Record<string, string | number>): string {
@@ -56,6 +46,6 @@ export class ApiService {
       });
     }
 
-    return `${this.getBaseUrl()}${endpoint}`;
+    return `${this.appService.getBaseUrl()}${endpoint}`;
   }
 }

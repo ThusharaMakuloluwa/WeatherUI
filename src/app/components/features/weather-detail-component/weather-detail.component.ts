@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WeatherService } from '../../../services/weather.service';
 import { WeatherResult } from '../../../models/weather-result.model';
@@ -12,15 +12,13 @@ import { FooterComponent } from '../../layout/footer-component/footer.component'
   styleUrl: './weather-detail.component.scss',
 })
 export class WeatherDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private weatherService = inject(WeatherService);
+
   weather?: WeatherResult;
   loading = false;
   error?: string;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private weatherService: WeatherService
-  ) {}
 
   ngOnInit(): void {
     const cityId = this.route.snapshot.params['id'];

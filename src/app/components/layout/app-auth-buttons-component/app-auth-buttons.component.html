@@ -1,0 +1,8 @@
+@if (!(auth.isAuthenticated$ | async)) {
+<button (click)="login()">Login</button>
+} @if (auth.isAuthenticated$ | async) {
+<div>
+  <span>Logged in</span>
+  <button (click)="logout()">Logout</button>
+</div>
+}

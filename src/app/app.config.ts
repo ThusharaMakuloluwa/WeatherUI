@@ -5,14 +5,19 @@ import {
   APP_INITIALIZER,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { AppService } from './services/app.service';
 import { ApiService } from './services/api.service';
 
-function initializeApp(apiService: ApiService) {
-  return () => apiService.loadConfiguration();
+import { provideAuth0, authHttpInterceptorFn } from '@auth0/auth0-angular';
+
+function initializeApp(appService: AppService, apiService: ApiService) {
+  return async () => {
+    await appService.loadConfiguration();
+    await apiService.loadConfiguration();
+  };
 }
 
 export const appConfig: ApplicationConfig = {
@@ -20,12 +25,29 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
+
+    provideAuth0({
+      domain: 'dev-a46wxo22df4cuc5n.us.auth0.com',
+      clientId: 'lGfM1wfdKFhzCMphJeZ93oDNtGtun1tb',
+      authorizationParams: {
+        redirect_uri: window.location.origin,
+        audience: 'https://fidenz-weather-api',
+      },
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: 'https://localhost:7290/api/*',
+          },
+        ],
+      },
+    }),
+
+    provideHttpClient(withFetch(), withInterceptors([authHttpInterceptorFn])),
+
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [ApiService],
+      deps: [AppService, ApiService],
       multi: true,
     },
   ],
