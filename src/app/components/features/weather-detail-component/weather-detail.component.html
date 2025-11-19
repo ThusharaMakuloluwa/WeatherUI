@@ -4,60 +4,52 @@
   <div class="detail-content">
     @if (loading) {
     <div class="loading">Loading weather details...</div>
-    } @if (error) {
+    } @else if (error) {
     <div class="error">{{ error }}</div>
-    } @if (weather) {
+    } @else if (weather) {
     <div class="detail-card">
-      <button class="back-btn" (click)="goBack()">←</button>
+      <button class="close-btn" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
 
-      <div class="card-header">
-        <h1 class="city-name">{{ weather.cityName }}, {{ weather.country }}</h1>
-        <p class="date-time">{{ weather.dateTime }}</p>
-      </div>
+      <div class="card-top">
+        <div class="header-section">
+          <h2 class="city-name">{{ weather.cityName }}, {{ weather.country }}</h2>
+          <p class="date-time">{{ weather.dateTime }}</p>
+        </div>
 
-      <div class="card-main">
-        <div class="weather-main-info">
-          <div class="weather-icon-large">
-            <span class="icon">☁️</span>
-          </div>
-          <div class="temperature-section">
+        <div class="weather-main">
+          <div class="weather-left">
+            <i class="weather-icon bi" [ngClass]="getWeatherIcon()"></i>
             <div class="description">{{ weather.description }}</div>
-            <div class="temperature-large">{{ weather.temperature }}°C</div>
+          </div>
+
+          <div class="separator"></div>
+
+          <div class="weather-right">
+            <div class="temperature">{{ weather.temperature }}°C</div>
             <div class="temp-range">
-              <span>Temp Min: {{ weather.tempMin }}°C</span>
-              <span>Temp Max: {{ weather.tempMax }}°C</span>
+              <div>Temp Min: {{ weather.tempMin }}°C</div>
+              <div>Temp Max: {{ weather.tempMax }}°C</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card-details">
-        <div class="detail-row">
-          <div class="detail-item">
-            <span class="label">Pressure:</span>
-            <span class="value">{{ weather.pressure }}hPa</span>
+      <div class="card-bottom">
+        <div class="info-layout">
+          <div class="info-left">
+            <div class="info-item">Pressure: {{ weather.pressure }}hPa</div>
+            <div class="info-item">Humidity: {{ weather.humidity }}%</div>
+            <div class="info-item">Visibility: {{ weather.visibility }}km</div>
           </div>
-          <div class="detail-item">
-            <span class="wind-icon">🧭</span>
-            <span class="value">{{ weather.windSpeed }}m/s {{ weather.windDegree }} Degree</span>
+          <div class="info-center">
+            <i class="wind-icon bi bi-send"></i>
+            <div class="wind-value">{{ weather.windSpeed }}m/s {{ weather.windDegree }} Degree</div>
           </div>
-          <div class="detail-item">
-            <span class="label">Sunrise:</span>
-            <span class="value">{{ weather.sunrise }}</span>
-          </div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-item">
-            <span class="label">Humidity:</span>
-            <span class="value">{{ weather.humidity }}%</span>
-          </div>
-          <div class="detail-item">
-            <span class="label">Visibility:</span>
-            <span class="value">{{ weather.visibility }}km</span>
-          </div>
-          <div class="detail-item">
-            <span class="label">Sunset:</span>
-            <span class="value">{{ weather.sunset }}</span>
+          <div class="info-right">
+            <div class="info-item">Sunrise: {{ weather.sunrise }}</div>
+            <div class="info-item">Sunset: {{ weather.sunset }}</div>
           </div>
         </div>
       </div>

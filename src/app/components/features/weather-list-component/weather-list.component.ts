@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { WeatherService } from '../../../services/weather.service';
@@ -13,10 +19,12 @@ import { FooterComponent } from '../../layout/footer-component/footer.component'
   imports: [FormsModule, HeaderComponent, WeatherCardComponent, FooterComponent],
   templateUrl: './weather-list.component.html',
   styleUrl: './weather-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherListComponent implements OnInit {
   private weatherService = inject(WeatherService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   cities: City[] = [];
   weatherList: WeatherResult[] = [];
@@ -30,14 +38,17 @@ export class WeatherListComponent implements OnInit {
 
   loadCities() {
     this.loading = true;
+    this.cdr.markForCheck();
     this.weatherService.getCities().subscribe({
       next: (cities) => {
         this.cities = cities;
+        this.cdr.markForCheck();
         this.loadAllWeather();
       },
       error: (err) => {
         this.error = 'Failed to load cities';
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -49,6 +60,7 @@ export class WeatherListComponent implements OnInit {
         next: (weather) => {
           this.weatherList.push(weather);
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error(`Failed to load weather for ${city.name}`, err);

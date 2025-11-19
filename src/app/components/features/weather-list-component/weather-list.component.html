@@ -20,8 +20,9 @@
     }
 
     <div class="weather-grid">
-      @for (weather of weatherList; track weather.cityId) {
-      <app-weather-card [weather]="weather" (cardClick)="onCardClick($event)"> </app-weather-card>
+      @for (weather of weatherList; track weather.cityId; let i = $index) {
+      <app-weather-card [weather]="weather" [cardIndex]="i" (cardClick)="onCardClick($event)">
+      </app-weather-card>
       }
     </div>
   </div>
