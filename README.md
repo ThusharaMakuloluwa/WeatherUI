@@ -1,59 +1,54 @@
-# WeatherUI
+# WeatherUI – Angular Frontend 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+This is the **Angular Frontend Application** developed for the **Weather App**.  
+It connects to the ASP.NET Core Web API backend and displays weather data for multiple cities.  
+The entire application is secured using **Auth0 Authentication & Authorization**.
 
-## Development server
+Backend → [WeatherBE](https://github.com/ThusharaMakuloluwa/WeatherBE.git)
 
+---
+
+## Features
+
+### ✔ Weather Application
+- Load city list from backend API  
+- Display current weather information  
+- Organized components/services/models
+
+### ✔ Authentication (Auth0)
+- Login & Logout using Auth0 Hosted Login Page  
+- Route protection via AuthGuard  
+- API calls secured using JWT (Auth0 Access Tokens)  
+- Automatic token injection using Http Interceptor  
+- **Public signups disabled**  
+- **Only pre-registered users allowed**   
+
+### ✔ Test User
+
+| Field | Value |
+|-------|--------|
+| **Email** | careers@fidenz.com |
+| **Password** | Pass#fidenz |
+
+---
+
+## Tech Stack
+
+- [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+- TypeScript
+- SCSS
+- HTML
+- Auth0 Angular SDK
+- Angular HttpClient
+
+---
+
+## Setup
 To start a local development server, run:
-
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to http://localhost:4200/.
+Make sure the backend API server is running.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
